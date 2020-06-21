@@ -1,0 +1,94 @@
+/*
+ Maintain the sequence
+ - Global
+ - Keyframes
+ - Tags
+ - Navigation Bar
+ - Divs & Sections
+ - Modals
+ - Generals
+ - Buttons
+ - Links
+ - Icons
+*/
+
+:root{
+    --bg-default: #ffffff;
+    --bg-primary: #252D3C;
+}
+
+/* -- KeyFrames -- */
+/* -- KeyFrames -- */
+
+/* -- Tags -- */
+body{
+    background-color: var(--bg-default);
+}
+/* -- Fonts -- */
+/* -- Fonts -- */
+/* -- Tags -- */
+
+/* -- Navigation Bar -- */
+#mainNav {
+    background-color: var(--bg-primary);
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0px;
+}
+.nav-borders{
+    /* Positioning */
+    /* Display & Box Model */
+    height: 5px;
+    width: 100%;
+    /* Other */
+}
+.nav-borders.above{
+    background-color: var(--bg-default);
+}
+
+.nav-borders.below{
+    background-color: var(--bg-primary);
+}
+
+.navbar-brand {
+    float: left;
+    padding: 5px 15px;
+    font-size: 18px;
+    line-height: 20px;
+    color: var(--bg-default) !important;
+}
+
+.navbar-brand a h4{
+    color: var(--bg-default);
+}
+
+
+/* -- Navigation Bar -- */
+
+/* -- Divs & Sections -- */
+
+/* -- Divs & Sections -- */
+
+/* -- Modals -- */
+
+/* -- Modals -- */
+
+/* -- Generals -- */
+
+/* -- Generals -- */
+
+/* -- Buttons -- */
+.input_ps{
+    height: 50px;
+    min-width: 100px;
+}
+/* -- Buttons -- */
+
+/* -- Links -- */
+
+/* -- Links -- */
+
+/* -- Icons -- */
+
+/* -- Icons -- */

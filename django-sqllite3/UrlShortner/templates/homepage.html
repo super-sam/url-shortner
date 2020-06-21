@@ -1,0 +1,146 @@
+{% extends "base-template.html" %}
+
+{% block meta %}
+{% endblock %}
+
+{% block externalcss %}
+{% endblock %}
+
+{% block inlinecss %}
+#main{
+    min-height:100%;
+}
+{% endblock %}
+
+{% block pagetitle %}
+    URL Shortner
+{% endblock %}
+
+{% block mainblock %}
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h1 class="text-center">URL Shortner</h1>
+            </div>
+        </div>
+        {% include "/shorturl.html" %}
+    </div>
+{% endblock %}
+
+{% block externaljs %}
+{% endblock %}
+
+{% block internaljs %}
+
+
+const Constants = {
+    URL: {
+       API_CREATE_SURL  : "/api/create-surl",
+       DOMAIN           : "http://127.0.0.1:8000" 
+    },
+    VALUE: {
+        BTN_SHORTEN     : "SHORTEN",
+        BTN_COPY        : "COPY"
+    }
+};
+
+/**
+ * Copy the content in the INPUT Box to clipboard
+ */
+let shortenURLCopy = function(){
+    let inputShortURL = document.getElementById("input-fullurl");
+    /* Select the text field */
+    inputShortURL.select();
+
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+};
+
+/**
+ * Handle the keypress event
+ * When key is pressed, if option was COPY, change it to SHORTEN
+ */
+let shortURLInputHandler = function(){
+    let inputShortURL = document.getElementById("input-fullurl");
+    const btnShorten = document.querySelector("#shorturl-div #btn-shorten");
+    if(btnShorten.innerText == Constants.VALUE.BTN_COPY){
+        btnShorten.innerText = Constants.VALUE.BTN_SHORTEN;
+        btnShorten.removeEventListener("click", shortenURLCopy);
+        btnShorten.addEventListener("click", shortenURL);
+    }
+    $(inputShortURL).popover('hide');
+};
+
+/**
+ * Shorten the URL
+ */
+let shortenURL = function(){
+    try {
+        const csrftoken = "{{csrf_token}}";
+        
+        let urlNode = document.querySelector("#shorturl-div #input-fullurl");
+        let btnShorten = document.querySelector("#shorturl-div #btn-shorten");
+        if(urlNode.value.length == 0){
+            urlNode.setAttribute('data-content', 'Please Enter a URL to Shorten');
+            throw 'Please Enter a URL to Shorten';
+        }
+        $(urlNode).popover('hide');
+        const uri = encodeURIComponent(urlNode.value);
+        const url = Constants.URL.API_CREATE_SURL;
+        
+        const formData = new FormData();
+        formData.set('url', uri);
+
+        const surlReq = new XMLHttpRequest();
+        surlReq.addEventListener("load", shortURLResponse);
+        surlReq.open("POST", url);
+        surlReq.setRequestHeader("X-CSRFToken", csrftoken);
+        surlReq.send(formData);
+        btnShorten.disabled = true;
+        urlNode.disabled = true;
+        btnShorten.innerHTML = '<i class="fas fa-yin-yang fa-spin"></i>';
+
+    }
+    catch(err) {
+        $('#shorturl-div #input-fullurl').popover('show');
+    } 
+    finally {
+    
+    }
+    
+};
+
+let shortURLResponse = function(){
+    let res = JSON.parse(this.responseText);
+    let inputShortURL = document.querySelector("#shorturl-div #input-fullurl");
+    const btnShorten = document.querySelector("#shorturl-div #btn-shorten");
+    btnShorten.disabled = false;
+    inputShortURL.disabled = false;
+    if(res.status === "error"){
+        inputShortURL.setAttribute('data-content', res.message);
+        $(inputShortURL).popover('show');
+        btnShorten.innerText = Constants.VALUE.BTN_SHORTEN;
+
+    } else {
+        const short = res.urlid;
+        const urlid = `${Constants.URL.DOMAIN}/${short}`;
+        inputShortURL.value = urlid;
+        
+        btnShorten.innerText = Constants.VALUE.BTN_COPY;
+        btnShorten.removeEventListener("click", shortenURL);
+        btnShorten.addEventListener("click", shortenURLCopy);
+    }
+
+};
+
+(function(){
+    /* Add Event Listeners */
+    const btnShorten = document.querySelector("#shorturl-div #btn-shorten");
+    btnShorten.addEventListener("click", shortenURL);
+
+    let inputShortURL = document.getElementById("input-fullurl");
+    inputShortURL.addEventListener('keydown', shortURLInputHandler);
+
+})();
+
+{% endblock %}

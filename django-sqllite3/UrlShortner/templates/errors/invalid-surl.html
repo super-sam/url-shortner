@@ -1,0 +1,33 @@
+{% extends "base-template.html" %}
+
+{% block meta %}
+{% endblock %}
+
+{% block externalcss %}
+{% endblock %}
+
+{% block inlinecss %}
+#main{
+    min-height:100%;
+}
+{% endblock %}
+
+{% block pagetitle %}
+    Invalid Short URL ID
+{% endblock %}
+
+{% block mainblock %}
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h1 class="text-center">Invalid Short URL ID : {{surl}}</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block externaljs %}
+{% endblock %}
+
+{% block internaljs %}
+{% endblock %}
