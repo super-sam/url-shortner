@@ -16,8 +16,8 @@ Shorten your long urls and share at ease.
 |Sl No| Content | URL |
 |--|--|--|
 | 1 | Django Sqlite3 Jinja2 | [repo](https://github.com/super-sam/url-shortner/tree/master/django-sqllite3) |
+| 2| Express Sqlite(memory) Ejs| [repo](https://github.com/super-sam/url-shortner/tree/master/express-sqlite3-sequelize)|
 | | | |
-
   
 
 # To Do
